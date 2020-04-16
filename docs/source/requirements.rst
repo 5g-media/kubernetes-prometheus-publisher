@@ -1,0 +1,3 @@
+Requirements
+=============================
+.. include:: ../../requirements.txt
