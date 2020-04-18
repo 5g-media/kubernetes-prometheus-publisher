@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# download code from repository
+# cd $HOME
+git clone https://github.com/5g-media/kubernetes-prometheus-publisher.git
 mv kubernetes-prometheus-publisher/ k8s-prometheus-publisher/
 find ./k8s-prometheus-publisher -type d -exec sudo chmod -R 755 {} \;
 find ./k8s-prometheus-publisher -type f -exec sudo chmod 664 {} \;

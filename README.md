@@ -2,26 +2,30 @@
 
 ## Introduction
 This service is responsible to:
-- retrieve monitoring data related to a Kubernetes cluster using the Prometheus API,
-- publish the monitoring data by given k8s container in the pub/sub broker (Apache Kafka)
+- retrieve monitoring data related to the containers/pods that are running in a Kubernetes cluster using the Prometheus API,
+- publish the monitoring data by given Kubernetes containers/pods in the publish/subscribe broker (Apache Kafka)
 
 Actually, this service feeds the [MAPE](https://github.com/5g-media/mape) with monitoring data.
 
 ## Requirements
-- Python vrs 3.5+
-- The Apache Kafka (vrs 1.1.0) broker must be accessible from the service
-- The Prometheus API (vrs 2.2.1) must be accessible from the service
+- Python 3.5+
+- The Apache Kafka broker must be accessible from the service
+- The Prometheus API must be accessible from the service
 
 ## Configuration
-Check the `settings.py` file:
- - *KAFKA_SERVER*: defines the kafka bus *host* and *port*.
- - *KAFKA_CLIENT_ID*: The default value is 'kubernetes-prometheus-publisher'.
- - *KAFKA_KUBERNETES_TOPIC*: defines the topic in which you want to send the messages. The default topic name is `nfvi.ncsrd.kubernetes`.
- - *PROMETHEUS*: defines the host port of the Prometheus service as a dict.
- - *PROMETHEUS_POLLING_STEP*: defines the polling step in Prometheus API. Default value is '30s'.
- - *PROMETHEUS_METRICS_LIST*: defines the list of metrics that we are interested in
- - *SCHEDULER_SECONDS*: defines how frequent the publisher is running to collect the values of the metrics. Default value is 30 seconds.
- - LOGGING: declares the logging (files, paths, backups, max length)
+
+A variety of variables are defined in the `settings.py`  file. The configuration that must be defined either as `ENV` variables or via an `.env` file (in case of docker-compose) in the deployment stage are the following ones:
+
+| **Setting** | **Description** |
+| --- | --- |
+| DEBUG | Run the service on debug mode or not. |
+| KAFKA_IP | The host of the Service Platform Virtualization publish/subscribe broker. |
+| KAFKA_PORT | The port of the Service Platform Virtualization publish/subscribe broker. By default, port is 9092. |
+| KAFKA_KUBERNETES_TOPIC | The publish/subscribe broker topic name where the monitoring data are published. By default, the topic name is `"nfvi.ncsrd.kubernetes"`. | 
+| PROMETHEUS_HOST | The host of the Prometheus API hosted in the Kubernetes cluster. | 
+| PROMETHEUS_PORT | The port of the Prometheus API hosted in the Kubernetes cluster. | 
+| PROMETHEUS_POLLING_STEP | Describes the polling step in Prometheus API. Default value is `20s`. | 
+| SCHEDULER_SECONDS | How frequent the publisher collects the monitoring data through the Prometheus API and publishes them in the pub/sub broker. Default value is `20` seconds. | 
 
 ## Installation/Deployment
 
@@ -40,18 +44,18 @@ $ sudo docker run -p 80:3333 --name k8s-prometheus-publisher --restart always \
   -e KAFKA_KUBERNETES_TOPIC="nfvi.ncsrd2.kubernetes" \
   -e PROMETHEUS_HOST="192.168.1.107" \
   -e PROMETHEUS_PORT="31078" \
-  -e PROMETHEUS_POLLING_STEP="45s" \
-  -e SCHEDULER_SECONDS=30 \
+  -e PROMETHEUS_POLLING_STEP="20s" \
+  -e SCHEDULER_SECONDS=20 \
   -dit k8s-prometheus-publisher
-$ rm Dockerfile
 ```
 The name of the docker image and container is:  *k8s-prometheus-publisher*.
 
 
 ## Usage
+
 After the installation/deployment of this service, it collects the
 values of predefined set of metrics (as these defined in the
-`settings.py` file) every `X` minutes and send them in the topic
+`settings.py` file) every `X` seconds and send them in the topic
 `nfvi.ncsrd.kubernetes`.
 
 An indicative structure of each message is:
@@ -96,10 +100,10 @@ $ python3 daemon.py
 ```
 
 ## Authors
-- Singular Logic
+- Singular Logic <pathanasoulis@ep.singularlogic.eu>
 
 ## Acknowledgements
-This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement *No 761699*. The dissemination of results herein reflects only the author’s view and the European Commission is not responsible for any use that may be made 
+This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement [No 761699](http://www.5gmedia.eu/). The dissemination of results herein reflects only the author’s view and the European Commission is not responsible for any use that may be made 
 of the information it contains.
 
 ## License
