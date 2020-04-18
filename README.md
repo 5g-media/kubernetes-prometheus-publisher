@@ -32,10 +32,13 @@ A variety of variables are defined in the `settings.py`  file. The configuration
 
 ## Installation/Deployment
 
-To build the docker image, copy the bash script included in the `bash_scripts/` folder in the parent folder of the project and then, run:
+To build the docker image, copy the bash script included in the `bash_scripts/` folder in the parent folder of the project and then, run:s
 ```bash
-   chmod +x build_docker_image.sh
-   ./build_docker_image.sh
+    cd $HOME
+    # clean repository
+    cp ./kubernetes-prometheus-publisher/bash_scripts/build_docker_image.sh .
+    chmod +x build_docker_image.sh
+    ./build_docker_image.sh
 ```
 
 Considering the docker image is available, you can deploy the service as a docker container using the below command:
