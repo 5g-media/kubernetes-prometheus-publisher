@@ -66,6 +66,15 @@ Check the running docker containers:
 ```
 The name of the docker image and container is:  *k8s-prometheus-publisher*.
 
+Check the logs using the cmd:
+```bash
+    docker logs -f k8s-prometheus-publisher
+    #expected logs
+    Starting supervisor: supervisord.
+    supervisord is running
+    Initialization completed.
+```
+
 
 ## Usage
 
@@ -105,7 +114,11 @@ An indicative structure of each message is:
 }
 ```
 
-Considering that the service is running as a supervisor task, you can check its status either by typing in your browser `http://{host}` and using as username/password the admin/admin, or inspecting the `supervisorctl` inside the docker container.
+Considering that the service is running as a supervisor task, you can check its status either by typing in your browser `http://{host}` and using as username/password the admin/admin, or inspecting the `supervisorctl` inside the docker container:
+```bash
+    # supervisorctl
+    k8s-prometheus-publisher         RUNNING   pid 25, uptime 0:01:30
+```
 
 
 ## Tests
