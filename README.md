@@ -32,13 +32,18 @@ A variety of variables are defined in the `settings.py`  file. The configuration
 
 ## Installation/Deployment
 
-To build the docker image, copy the bash script included in the `bash_scripts/` folder in the parent folder of the project and then, run:s
+To build the docker image, copy the bash script included in the `bash_scripts/` folder in the parent folder of the project and then, run:
 ```bash
     cd $HOME
     # clean repository
     cp ./kubernetes-prometheus-publisher/bash_scripts/build_docker_image.sh .
     chmod +x build_docker_image.sh
     ./build_docker_image.sh
+```
+
+Check the available docker images using:
+```bash
+    docker images
 ```
 
 Considering the docker image is available, you can deploy the service as a docker container using the below command:
@@ -53,6 +58,11 @@ $ sudo docker run -p 80:3333 --name k8s-prometheus-publisher --restart always \
   -e PROMETHEUS_POLLING_STEP="20s" \
   -e SCHEDULER_SECONDS=20 \
   -dit k8s-prometheus-publisher
+```
+
+Check the running docker containers:
+```bash
+    docker ps -a
 ```
 The name of the docker image and container is:  *k8s-prometheus-publisher*.
 
