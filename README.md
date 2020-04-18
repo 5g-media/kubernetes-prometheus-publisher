@@ -13,6 +13,8 @@ Actually, this service feeds the [MAPE](https://github.com/5g-media/mape) with m
 - The Apache Kafka broker must be accessible from the service
 - The Prometheus API must be accessible from the service
 
+The required python packages are depicted in the `requirements.txt` file. 
+
 ## Configuration
 
 A variety of variables are defined in the `settings.py`  file. The configuration that is used in the deployment phase (either as `ENV` variables or via an `.env` file in case of docker-compose) includes:
@@ -90,7 +92,7 @@ An indicative structure of each message is:
 }
 ```
 
-Considering that the service is running as a supervisor task, you can check its status either by typing in your browser `http://{host}`, or inspecting the `supervisorctl` inside the docker container.
+Considering that the service is running as a supervisor task, you can check its status either by typing in your browser `http://{host}` and using as username/password the admin/admin, or inspecting the `supervisorctl` inside the docker container.
 
 
 ## Tests
