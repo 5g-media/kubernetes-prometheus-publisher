@@ -35,7 +35,7 @@ A variety of variables are defined in the `settings.py`  file. The configuration
 To build the docker image, copy the bash script included in the `bash_scripts/` folder in the parent folder of the project and then, run:
 ```bash
     cd $HOME
-    # clean repository
+    # clone repository
     cp ./kubernetes-prometheus-publisher/bash_scripts/build_docker_image.sh .
     chmod +x build_docker_image.sh
     ./build_docker_image.sh
