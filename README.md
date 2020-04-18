@@ -9,16 +9,17 @@ Actually, this service feeds the [MAPE](https://github.com/5g-media/mape) with m
 
 ## Requirements
 - Python 3.5+
+- Docker engine
 - The Apache Kafka broker must be accessible from the service
 - The Prometheus API must be accessible from the service
 
 ## Configuration
 
-A variety of variables are defined in the `settings.py`  file. The configuration that must be defined either as `ENV` variables or via an `.env` file (in case of docker-compose) in the deployment stage are the following ones:
+A variety of variables are defined in the `settings.py`  file. The configuration that is used in the deployment phase (either as `ENV` variables or via an `.env` file in case of docker-compose) includes:
 
 | **Setting** | **Description** |
 | --- | --- |
-| DEBUG | Run the service on debug mode or not. |
+| DEBUG | Run the service on debug mode or not. By default, debug is disabled. |
 | KAFKA_IP | The host of the Service Platform Virtualization publish/subscribe broker. |
 | KAFKA_PORT | The port of the Service Platform Virtualization publish/subscribe broker. By default, port is 9092. |
 | KAFKA_KUBERNETES_TOPIC | The publish/subscribe broker topic name where the monitoring data are published. By default, the topic name is `"nfvi.ncsrd.kubernetes"`. | 
@@ -88,6 +89,8 @@ An indicative structure of each message is:
     ]
 }
 ```
+
+Considering that the service is running as a supervisor task, you can check its status either by typing in your browser `http://{host}`, or inspecting the `supervisorctl` inside the docker container.
 
 
 ## Tests
